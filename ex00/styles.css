@@ -54,55 +54,6 @@ body {
     justify-content: center;
 }
 
-@keyframes tile-enter {
-    0% {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.tile-enter {
-    animation: tile-enter 0.2s ease-in-out;
-}
-
-/* Animación para mover las celdas */
-@keyframes tile-move {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(var(--move-x), var(--move-y));
-    }
-}
-
-.tile-moving {
-    animation: tile-move 0.2s ease-in-out;
-}
-
-/* Animación para la combinación de celdas */
-@keyframes tile-combine {
-    0% {
-        transform: scale(1);
-        background-color: #fff;
-    }
-    50% {
-        transform: scale(1.1);
-        background-color: #ffd700; /* Color dorado de expansión */
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.tile-combine {
-    animation: tile-combine 0.2s ease-in-out;
-}
-
-/* Transiciones para el tablero y las celdas */
 .grid-container {
     position: relative;
     display: grid;
@@ -117,9 +68,10 @@ body {
     max-height: 320px;
     margin: auto;
     background-color: #92c6a8;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
+/* Animaciones para las celdas (tile) */
 .tile {
     display: flex;
     justify-content: center;
@@ -132,93 +84,113 @@ body {
     width: 100%;
     height: 100%;
     background-color: #75a98a;
-    transform: scale(1); /* Previene distorsiones previas a la animación */
 }
 
-.tile-enter {
-    animation: tile-enter 0.5s ease-in-out;
+@keyframes tileAppear {
+    0% {
+        transform: scale(0.8); /* Comienza más pequeña */
+    }
+    100% {
+        transform: scale(1); /* Termina al tamaño original */
+    }
 }
 
-/* Colores para cada celda */
+/* Colores de las celdas según su valor */
 .tile-2 {
-    background-color: #a7d3b4; /* Verde suave claro */
-    color: #4f6f59; /* Gris oscuro, dando contraste */
+    background-color: #a7d3b4;
+    color: #4f6f59;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-4 {
-    background-color: #84b88f; /* Verde pálido con un toque grisáceo */
+    background-color: #84b88f;
     color: #4f6f59;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-8 {
-    background-color: #76a67f; /* Verde con un toque más oscuro */
+    background-color: #76a67f;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-16 {
-    background-color: #6a9a69; /* Verde oscuro, como un pino en invierno */
+    background-color: #6a9a69;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-32 {
-    background-color: #568e58; /* Verde más profundo, evocando un bosque denso */
+    background-color: #568e58;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-64 {
-    background-color: #4b7e49; /* Verde bosque, con tonos oscuros */
+    background-color: #4b7e49;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-128 {
-    background-color: #3c6b3a; /* Verde oliva oscuro, profundo */
+    background-color: #3c6b3a;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-256 {
-    background-color: #355a32; /* Verde oscuro, casi musgo */
+    background-color: #355a32;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-512 {
-    background-color: #2f4a2b; /* Verde muy oscuro, como un bosque cubierto de nieve */
+    background-color: #2f4a2b;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-1024 {
-    background-color: #263b24; /* Verde bosque nocturno */
+    background-color: #263b24;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
 .tile-2048 {
-    background-color: #1d2e1a; /* Verde profundo, oscuro, como un abeto cubierto de nieve */
+    background-color: #1d2e1a;
     color: #ffffff;
+    animation: tileAppear 0.4s ease-out forwards;
 }
 
+
 #restart-btn {
-    background-color: #92c6a8; /* Verde suave, armonioso con la cuadrícula */
+    background-color: #92c6a8;
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
     margin-top: 10px;
 }
 
 #restart-btn:hover {
-    background-color: #7da98e; /* Verde más oscuro en hover */
+    background-color: #7da98e;
 }
 
-/* Media queries para hacerlo responsive */
+#score, #best-score {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #76a67f;
+    border-radius: 5px;
+    color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 6px;
+}
 
-/* Para pantallas pequeñas (móviles) */
+/* Media queries */
 @media (max-width: 600px) {
-    .body {
-        background-position: right;
-    }
-
     .grid-container {
         width: 90vw;
         height: 90vw;
@@ -236,13 +208,7 @@ body {
     }
 }
 
-
-/* Para pantallas medianas (tabletas) */
 @media (max-width: 900px) {
-    .body {
-        background-position: center;
-    }
-
     .grid-container {
         width: 85vw;
         height: 85vw;
@@ -260,12 +226,7 @@ body {
     }
 }
 
-/* Para pantallas grandes (escritorio) */
 @media (min-width: 901px) {
-    .body {
-        background-position: center;
-    }
-
     .grid-container {
         width: 80vw;
         height: 80vw;
@@ -279,25 +240,6 @@ body {
 
     #restart-btn {
         font-size: 16px;
-        padding: 10px 20px;
+        padding: 10px 20px;  
     }
-}
-
-#score {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #76a67f; /* Verde suave para el puntaje */
-    border-radius: 5px;
-    color: #ffffff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#best-score {
-    margin-top: 10px;
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #76a67f; /* Verde suave para el mejor puntaje */
-    border-radius: 5px;
-    color: #ffffff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

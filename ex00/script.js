@@ -29,19 +29,21 @@ function printGrid() {
                 tile.classList.add("empty"); // Clase para celdas vacías
             } else {
                 tile.classList.add(`tile-${value}`); // Clase para cada valor
-            }
+                tile.textContent = grid[i][j]; // Muestra el valor de la celda
 
-            // Muestra el valor vacío si no hay nada
-            tile.textContent = grid[i][j] === 0 ? '' : grid[i][j];
+                // Aplica la animación solo si la celda tiene un valor distinto de 0
+                tile.classList.add("tile-animation");
+            }
 
             // Añade cada celda al contenedor
             gridContainer.appendChild(tile);
         }
     }
-
     // Muestra la puntuación y la actualiza
     scoreContainer.textContent = `Score: ${score}`;
 }
+
+
 
 // Función para generar un número aleatorio
 function generateRandomNumber() {
@@ -69,43 +71,6 @@ function generateRandomNumber() {
 }
 
 /* -------------- MOVIMIENTO -------------- */
-
-// Creamos un detector de eventos para las teclas
-document.addEventListener("keydown", handleKeyPress);
-
-function handleKeyPress(event) {
-    switch (event.key) {
-        case "ArrowUp":
-            moveUp();
-            break;
-        case "ArrowDown":
-            moveDown();
-            break;
-        case "ArrowLeft":
-            moveLeft();
-            break;
-        case "ArrowRight":
-            moveRight();
-            break;
-        default:
-            return;
-    }
-
-    // Después de cada movimiento, se genera un nuevo número
-    generateRandomNumber();
-
-    // Redibujamos el tablero
-    printGrid();
-
-    if (isGameOver()) {
-        alert('Game Over!');
-        updateScore(score);
-    }
-    if (isGameWon()) {
-        alert('You Win!');
-        updateScore(score);
-    }
-}
 
 // Funciones para mover los números según la flecha
 function moveLeft() {
@@ -212,41 +177,20 @@ function isGameWon() {
     return false;
 }
 
-/* -------------- REINICIAR JUEGO -------------- */
-
-// Función para reiniciar el tablero
-function restartGame() {
-    score = 0;
-
-    // Pone todo el tablero de nuevo en 0
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[i].length; j++) {
-            grid[i][j] = 0;
-        }
-    }
-    generateRandomNumber();
-    generateRandomNumber();
-    printGrid();
-    displayBestScore();
-}
-
-// Evento para reiniciar al hacer click en el botón
-document.getElementById('restart-btn').addEventListener('click', restartGame);
-
 /* -------------- MEJOR PUNTUACION -------------- */
 
+// Función para actualizar la puntuación
+function updateScore(score) {
+    const bestScore = getBestScore();
+    if (score > bestScore) {
+        localStorage.setItem('bestScore', score);
+    }
+    document.getElementById('score').textContent = `Score: ${score}`;
+}
 
 // Obtener la mejor puntuación guardada
 function getBestScore() {
-    return localStorage.getItem('bestScore') || 0; // Retorna 0 si no hay puntuación guardada
-}
-
-// Función para guardar la nueva mejor puntuación
-function setBestScore() {
-    const bestScore = getBestScore();
-    if (score > bestScore) {
-        localStorage.setItem('bestScore', score); // Guarda la nueva puntuación
-    }
+    return localStorage.getItem('bestScore') || 0;
 }
 
 // Función para mostrar la mejor puntuación en la interfaz
@@ -255,16 +199,131 @@ function displayBestScore() {
     document.getElementById('best-score').textContent = `Best Score: ${bestScore}`;
 }
 
-// Función que se llama cuando el juego termina o cuando se actualiza la puntuación
-function updateScore(score) {
-    setBestScore(); // Llama a setBestScore para actualizar la mejor puntuación
-    document.getElementById('score').textContent = `Score: ${score}`;
+/* -------------- GESTOS DE DESLIZAMIENTO -------------- */
+
+// Variables para gestos táctiles
+let startX, startY, endX, endY;
+let isTouchMove = false;
+
+document.addEventListener('touchstart', function(e) {
+    const touch = e.touches[0];
+    startX = touch.pageX;
+    startY = touch.pageY;
+    isTouchMove = false; // Reseteamos el estado de movimiento
+}, false);
+
+document.addEventListener('touchend', function(e) {
+    const touch = e.changedTouches[0];
+    endX = touch.pageX;
+    endY = touch.pageY;
+
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+
+    // Solo consideramos un deslizamiento si el movimiento es mayor a un umbral mínimo (por ejemplo, 30px)
+    if (Math.abs(diffX) > 30 || Math.abs(diffY) > 30) {
+        isTouchMove = true;
+    }
+
+    // Si hubo un deslizamiento, lo procesamos, sino no hacemos nada
+    if (isTouchMove) {
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+                console.log('Deslizar hacia la derecha');
+                moveRight(); // Llama a la función para mover las celdas a la derecha
+            } else {
+                console.log('Deslizar hacia la izquierda');
+                moveLeft(); // Llama a la función para mover las celdas a la izquierda
+            }
+        } else {
+            if (diffY > 0) {
+                console.log('Deslizar hacia abajo');
+                moveDown(); // Llama a la función para mover las celdas hacia abajo
+            } else {
+                console.log('Deslizar hacia arriba');
+                moveUp(); // Llama a la función para mover las celdas hacia arriba
+            }
+        }
+
+        // Después de cada movimiento, genera un nuevo número y actualiza el tablero
+        generateRandomNumber();
+        printGrid();
+
+        // Verifica si el juego terminó
+        if (isGameOver()) {
+            alert('Game Over!');
+            updateScore(score);
+        }
+
+        // Verifica si el jugador ha ganado
+        if (isGameWon()) {
+            alert('You Win!');
+        }
+    }
+}, false);
+
+/* -------------- TECLAS DE DIRECCIÓN -------------- */
+
+// Función para escuchar las teclas de dirección
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+        moveLeft(); // Llama a la función para mover las celdas a la izquierda
+    } else if (e.key === 'ArrowRight') {
+        moveRight(); // Llama a la función para mover las celdas a la derecha
+    } else if (e.key === 'ArrowUp') {
+        moveUp(); // Llama a la función para mover las celdas hacia arriba
+    } else if (e.key === 'ArrowDown') {
+        moveDown(); // Llama a la función para mover las celdas hacia abajo
+    }
+
+    // Después de cada movimiento, genera un nuevo número y actualiza el tablero
+    generateRandomNumber();
+    printGrid();
+
+    // Verifica si el juego terminó
+    if (isGameOver()) {
+        alert('Game Over!');
+        updateScore(score);
+    }
+
+    // Verifica si el jugador ha ganado
+    if (isGameWon()) {
+        alert('You Win!');
+    }
+});
+
+// Inicializar la mejor puntuación
+displayBestScore();
+
+
+/* -------------- BOTÓN DE REINICIO -------------- */
+
+// Función para reiniciar el juego
+function restartGame() {
+    // Resetea el tablero a su estado inicial
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            grid[i][j] = 0;
+        }
+    }
+
+    // Reinicia la puntuación
+    score = 0;
+    updateScore(score);
+
+    // Genera dos números aleatorios al iniciar
+    generateRandomNumber();
+    generateRandomNumber();
+
+    // Imprime el tablero actualizado
+    printGrid();
+    displayBestScore();
 }
 
-// Llamar a la función para mostrar la mejor puntuación
-window.onload = function() {
-    displayBestScore();
-};
+// Asocia el evento del botón de reinicio
+document.getElementById('restart-btn').addEventListener('click', function() {
+    restartGame();
+});
 
 /* -------------- INICIALIZAR EL JUEGO -------------- */
 
