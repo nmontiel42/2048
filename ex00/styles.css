@@ -1,0 +1,302 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('public/pixelcut-export.jpeg');
+    background-size: cover; /* Hace que la imagen cubra toda el área sin distorsión */
+    background-repeat: no-repeat;
+}
+
+#welcome-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 48px;
+    color: black; /* Verde bosque oscuro */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para hacer que el título resalte */
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out forwards; /* Agregar la animación de desvanecimiento */
+}
+
+/* Estilo para el subtítulo */
+#welcome-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px; /* Hacer el texto más pequeño */
+    color: black; /* Color del texto */
+    background-color: rgba(146, 198, 168, 0.8); /* Fondo verde suave y translúcido */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out forwards; /* Animación para el subtítulo */
+    opacity: 0;
+    animation-delay: 1s; /* Retrasar la animación para que no sea simultánea */
+    width: auto;
+    max-width: 80%;
+}
+
+/* Animación de desvanecimiento */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.game-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes tile-enter {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.tile-enter {
+    animation: tile-enter 0.2s ease-in-out;
+}
+
+/* Animación para mover las celdas */
+@keyframes tile-move {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(var(--move-x), var(--move-y));
+    }
+}
+
+.tile-moving {
+    animation: tile-move 0.2s ease-in-out;
+}
+
+/* Animación para la combinación de celdas */
+@keyframes tile-combine {
+    0% {
+        transform: scale(1);
+        background-color: #fff;
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: #ffd700; /* Color dorado de expansión */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tile-combine {
+    animation: tile-combine 0.2s ease-in-out;
+}
+
+/* Transiciones para el tablero y las celdas */
+.grid-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80vw;
+    height: 80vw;
+    max-width: 320px;
+    max-height: 320px;
+    margin: auto;
+    background-color: #92c6a8;
+    transition: all 0.5s ease-in-out;
+}
+
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    height: 100%;
+    background-color: #75a98a;
+    transform: scale(1); /* Previene distorsiones previas a la animación */
+}
+
+.tile-enter {
+    animation: tile-enter 0.5s ease-in-out;
+}
+
+/* Colores para cada celda */
+.tile-2 {
+    background-color: #a7d3b4; /* Verde suave claro */
+    color: #4f6f59; /* Gris oscuro, dando contraste */
+}
+
+.tile-4 {
+    background-color: #84b88f; /* Verde pálido con un toque grisáceo */
+    color: #4f6f59;
+}
+
+.tile-8 {
+    background-color: #76a67f; /* Verde con un toque más oscuro */
+    color: #ffffff;
+}
+
+.tile-16 {
+    background-color: #6a9a69; /* Verde oscuro, como un pino en invierno */
+    color: #ffffff;
+}
+
+.tile-32 {
+    background-color: #568e58; /* Verde más profundo, evocando un bosque denso */
+    color: #ffffff;
+}
+
+.tile-64 {
+    background-color: #4b7e49; /* Verde bosque, con tonos oscuros */
+    color: #ffffff;
+}
+
+.tile-128 {
+    background-color: #3c6b3a; /* Verde oliva oscuro, profundo */
+    color: #ffffff;
+}
+
+.tile-256 {
+    background-color: #355a32; /* Verde oscuro, casi musgo */
+    color: #ffffff;
+}
+
+.tile-512 {
+    background-color: #2f4a2b; /* Verde muy oscuro, como un bosque cubierto de nieve */
+    color: #ffffff;
+}
+
+.tile-1024 {
+    background-color: #263b24; /* Verde bosque nocturno */
+    color: #ffffff;
+}
+
+.tile-2048 {
+    background-color: #1d2e1a; /* Verde profundo, oscuro, como un abeto cubierto de nieve */
+    color: #ffffff;
+}
+
+#restart-btn {
+    background-color: #92c6a8; /* Verde suave, armonioso con la cuadrícula */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#restart-btn:hover {
+    background-color: #7da98e; /* Verde más oscuro en hover */
+}
+
+/* Media queries para hacerlo responsive */
+
+/* Para pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+    .body {
+        background-position: right;
+    }
+
+    .grid-container {
+        width: 90vw;
+        height: 90vw;
+        max-width: 280px;
+        max-height: 280px;
+    }
+
+    .tile {
+        font-size: 18px;
+    }
+
+    #restart-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* Para pantallas medianas (tabletas) */
+@media (max-width: 900px) {
+    .body {
+        background-position: center;
+    }
+
+    .grid-container {
+        width: 85vw;
+        height: 85vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .tile {
+        font-size: 20px;
+    }
+
+    #restart-btn {
+        font-size: 15px;
+        padding: 9px 18px;
+    }
+}
+
+/* Para pantallas grandes (escritorio) */
+@media (min-width: 901px) {
+    .body {
+        background-position: center;
+    }
+
+    .grid-container {
+        width: 80vw;
+        height: 80vw;
+        max-width: 320px;
+        max-height: 320px;
+    }
+
+    .tile {
+        font-size: 24px;
+    }
+
+    #restart-btn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+#score {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #76a67f; /* Verde suave para el puntaje */
+    border-radius: 5px;
+    color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#best-score {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #76a67f; /* Verde suave para el mejor puntaje */
+    border-radius: 5px;
+    color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
