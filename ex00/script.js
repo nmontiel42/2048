@@ -29,11 +29,13 @@ function printGrid() {
                 tile.classList.add("empty"); // Clase para celdas vacías
             } else {
                 tile.classList.add(`tile-${value}`); // Clase para cada valor
-                tile.textContent = grid[i][j]; // Muestra el valor de la celda
-
-                // Aplica la animación solo si la celda tiene un valor distinto de 0
-                tile.classList.add("tile-animation");
             }
+
+            // Muestra el valor vacío si no hay nada
+            tile.textContent = grid[i][j] === 0 ? '' : grid[i][j];
+
+            // Añade la clase de animación
+            tile.classList.add("tile-animation");
 
             // Añade cada celda al contenedor
             gridContainer.appendChild(tile);
@@ -42,7 +44,6 @@ function printGrid() {
     // Muestra la puntuación y la actualiza
     scoreContainer.textContent = `Score: ${score}`;
 }
-
 
 
 // Función para generar un número aleatorio
@@ -73,17 +74,22 @@ function generateRandomNumber() {
 /* -------------- MOVIMIENTO -------------- */
 
 // Funciones para mover los números según la flecha
-function moveLeft() {
+function moveLeft() 
+{
+    let hasMove = false;
     for (let i = 0; i < grid.length; i++) {
         // Filtrar los números quitando el 0
         let row = grid[i].filter(val => val !== 0);
 
         // Combina las celdas del mismo número
-        for (let j = 0; j < row.length - 1; j++) {
-            if (row[j] === row[j + 1]) {
+        for (let j = 0; j < row.length - 1; j++)
+        {
+            if (row[j] === row[j + 1])
+            {
                 row[j] *= 2;
                 score += row[j]; // Suma la puntuación
                 row[j + 1] = 0; // Elimina la que acaba de combinar
+                hasMove = true;
             }
         }
 
@@ -95,21 +101,28 @@ function moveLeft() {
 
         // Actualizamos la fila en la matriz
         grid[i] = row;
+        hasMove = true;
+        
     }
-    updateScore(score);
+    return hasMove;
 }
 
-function moveRight() {
+function moveRight()
+{
+    let hasMove = false;
     for (let i = 0; i < grid.length; i++) {
         // Invierte la fila
         grid[i] = grid[i].reverse();
 
         let row = grid[i].filter(val => val !== 0);
-        for (let j = 0; j < row.length - 1; j++) {
-            if (row[j] === row[j + 1]) {
+        for (let j = 0; j < row.length - 1; j++)
+        {
+            if (row[j] === row[j + 1])
+            {
                 row[j] *= 2;
                 score += row[j];
                 row[j + 1] = 0;
+                hasMove = true;
             }
         }
 
@@ -120,7 +133,9 @@ function moveRight() {
 
         // Vuelve a invertirla
         grid[i] = grid[i].reverse();
+        hasMove = true;
     }
+    return hasMove;
 }
 
 function moveUp() {
@@ -265,19 +280,25 @@ document.addEventListener('touchend', function(e) {
 /* -------------- TECLAS DE DIRECCIÓN -------------- */
 
 // Función para escuchar las teclas de dirección
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function(e)
+{
+    let hasMove = false;
     if (e.key === 'ArrowLeft') {
-        moveLeft(); // Llama a la función para mover las celdas a la izquierda
+        hasMove = moveLeft(); // Llama a la función para mover las celdas a la izquierda
     } else if (e.key === 'ArrowRight') {
-        moveRight(); // Llama a la función para mover las celdas a la derecha
+        hasMove = moveRight(); // Llama a la función para mover las celdas a la derecha
     } else if (e.key === 'ArrowUp') {
-        moveUp(); // Llama a la función para mover las celdas hacia arriba
+        hasMove = moveUp();// Llama a la función para mover las celdas hacia arriba
     } else if (e.key === 'ArrowDown') {
-        moveDown(); // Llama a la función para mover las celdas hacia abajo
+        hasMove = moveDown(); // Llama a la función para mover las celdas hacia abajo
     }
 
-    // Después de cada movimiento, genera un nuevo número y actualiza el tablero
-    generateRandomNumber();
+    
+    if (hasMove)
+    {// Después de cada movimiento, genera un nuevo número y actualiza el tablero
+        generateRandomNumber();
+        hasMove = false;
+    }
     printGrid();
 
     // Verifica si el juego terminó

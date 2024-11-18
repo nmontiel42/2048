@@ -17,7 +17,7 @@ body {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para hacer que el título resalte */
     text-align: center;
     margin-bottom: 20px;
-    animation: fadeIn 1s ease-in-out forwards; /* Agregar la animación de desvanecimiento */
+    animation: fadeIn 1s ease-in-out; /* Agregar la animación de desvanecimiento */
 }
 
 /* Estilo para el subtítulo */
@@ -29,7 +29,7 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     text-align: center;
-    animation: fadeIn 1.5s ease-in-out forwards; /* Animación para el subtítulo */
+    animation: fadeIn 1.5s ease-in-out; /* Animación para el subtítulo */
     opacity: 0;
     animation-delay: 1s; /* Retrasar la animación para que no sea simultánea */
     width: auto;
@@ -68,7 +68,7 @@ body {
     max-height: 320px;
     margin: auto;
     background-color: #92c6a8;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 /* Animaciones para las celdas (tile) */
@@ -99,67 +99,67 @@ body {
 .tile-2 {
     background-color: #a7d3b4;
     color: #4f6f59;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-4 {
     background-color: #84b88f;
     color: #4f6f59;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-8 {
     background-color: #76a67f;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-16 {
     background-color: #6a9a69;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-32 {
     background-color: #568e58;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-64 {
     background-color: #4b7e49;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-128 {
     background-color: #3c6b3a;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-256 {
     background-color: #355a32;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-512 {
     background-color: #2f4a2b;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-1024 {
     background-color: #263b24;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 .tile-2048 {
     background-color: #1d2e1a;
     color: #ffffff;
-    animation: tileAppear 0.4s ease-out forwards;
+    animation: tileAppear 0.5s ease-in-out;
 }
 
 
@@ -171,7 +171,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.4s ease;
+    transition: background-color 0.5s ease;
     margin-top: 10px;
 }
 
