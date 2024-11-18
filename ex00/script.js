@@ -227,7 +227,9 @@ document.addEventListener('touchstart', function(e) {
     isTouchMove = false; // Reseteamos el estado de movimiento
 }, false);
 
-document.addEventListener('touchend', function(e) {
+document.addEventListener('touchend', function(e)
+{
+    let hasMove = false;
     const touch = e.changedTouches[0];
     endX = touch.pageX;
     endY = touch.pageY;
@@ -245,23 +247,27 @@ document.addEventListener('touchend', function(e) {
         if (Math.abs(diffX) > Math.abs(diffY)) {
             if (diffX > 0) {
                 console.log('Deslizar hacia la derecha');
-                moveRight(); // Llama a la función para mover las celdas a la derecha
+                hasMove = moveRight(); // Llama a la función para mover las celdas a la derecha
             } else {
                 console.log('Deslizar hacia la izquierda');
-                moveLeft(); // Llama a la función para mover las celdas a la izquierda
+                hasMove = moveLeft(); // Llama a la función para mover las celdas a la izquierda
             }
         } else {
             if (diffY > 0) {
                 console.log('Deslizar hacia abajo');
-                moveDown(); // Llama a la función para mover las celdas hacia abajo
+                hasMove = moveDown(); // Llama a la función para mover las celdas hacia abajo
             } else {
                 console.log('Deslizar hacia arriba');
-                moveUp(); // Llama a la función para mover las celdas hacia arriba
+                hasMove = moveUp(); // Llama a la función para mover las celdas hacia arriba
             }
         }
 
         // Después de cada movimiento, genera un nuevo número y actualiza el tablero
-        generateRandomNumber();
+        if (hasMove)
+        {// Después de cada movimiento, genera un nuevo número y actualiza el tablero
+            generateRandomNumber();
+            hasMove = false;
+        }
         printGrid();
 
         // Verifica si el juego terminó
@@ -312,10 +318,6 @@ document.addEventListener('keydown', function(e)
     }
 });
 
-// Inicializar la mejor puntuación
-displayBestScore();
-
-
 /* -------------- BOTÓN DE REINICIO -------------- */
 
 // Función para reiniciar el juego
@@ -351,3 +353,4 @@ document.getElementById('restart-btn').addEventListener('click', function() {
 generateRandomNumber();
 generateRandomNumber();
 printGrid();
+displayBestScore();
