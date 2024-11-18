@@ -273,16 +273,17 @@ document.addEventListener('touchend', function(e)
         // Verifica si el juego terminó
         if (isGameOver()) {
             alert('Game Over!');
+            updateScore(score);
         }
 
         // Verifica si el jugador ha ganado
         if (isGameWon()) {
             alert('You Win!');
+            updateScore(score);
         }
+        displayBestScore();
     }
 }, false);
-
-displayBestScore();
 
 /* -------------- TECLAS DE DIRECCIÓN -------------- */
 
@@ -317,10 +318,9 @@ document.addEventListener('keydown', function(e)
     // Verifica si el jugador ha ganado
     if (isGameWon()) {
         alert('You Win!');
+        updateScore(score);
     }
 });
-
-displayBestScore();
 
 /* -------------- BOTÓN DE REINICIO -------------- */
 
