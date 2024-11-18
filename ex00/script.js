@@ -282,6 +282,8 @@ document.addEventListener('touchend', function(e)
     }
 }, false);
 
+displayBestScore();
+
 /* -------------- TECLAS DE DIRECCIÓN -------------- */
 
 // Función para escuchar las teclas de dirección
