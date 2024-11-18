@@ -318,6 +318,8 @@ document.addEventListener('keydown', function(e)
     }
 });
 
+displayBestScore();
+
 /* -------------- BOTÓN DE REINICIO -------------- */
 
 // Función para reiniciar el juego
@@ -353,4 +355,3 @@ document.getElementById('restart-btn').addEventListener('click', function() {
 generateRandomNumber();
 generateRandomNumber();
 printGrid();
-displayBestScore();
