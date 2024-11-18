@@ -267,7 +267,6 @@ document.addEventListener('touchend', function(e) {
         // Verifica si el juego terminó
         if (isGameOver()) {
             alert('Game Over!');
-            updateScore(score);
         }
 
         // Verifica si el jugador ha ganado
