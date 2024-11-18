@@ -30,7 +30,6 @@ body {
     border-radius: 5px;
     text-align: center;
     animation: fadeIn 1.5s ease-in-out; /* Animación para el subtítulo */
-    opacity: 0;
     animation-delay: 1s; /* Retrasar la animación para que no sea simultánea */
     width: auto;
     max-width: 80%;
