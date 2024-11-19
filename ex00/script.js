@@ -355,3 +355,4 @@ document.getElementById('restart-btn').addEventListener('click', function() {
 generateRandomNumber();
 generateRandomNumber();
 printGrid();
+displayBestScore();
