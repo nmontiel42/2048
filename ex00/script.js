@@ -264,7 +264,7 @@ document.addEventListener('touchend', function(e)
 
         // Después de cada movimiento, genera un nuevo número y actualiza el tablero
         if (hasMove)
-        {// Después de cada movimiento, genera un nuevo número y actualiza el tablero
+        {
             generateRandomNumber();
             hasMove = false;
         }
@@ -292,30 +292,28 @@ document.addEventListener('keydown', function(e)
 {
     let hasMove = false;
     if (e.key === 'ArrowLeft') {
-        hasMove = moveLeft(); // Llama a la función para mover las celdas a la izquierda
+        hasMove = moveLeft();
     } else if (e.key === 'ArrowRight') {
-        hasMove = moveRight(); // Llama a la función para mover las celdas a la derecha
+        hasMove = moveRight();
     } else if (e.key === 'ArrowUp') {
-        hasMove = moveUp();// Llama a la función para mover las celdas hacia arriba
+        hasMove = moveUp();
     } else if (e.key === 'ArrowDown') {
-        hasMove = moveDown(); // Llama a la función para mover las celdas hacia abajo
+        hasMove = moveDown();
     }
 
     
     if (hasMove)
-    {// Después de cada movimiento, genera un nuevo número y actualiza el tablero
+    {
         generateRandomNumber();
         hasMove = false;
     }
     printGrid();
 
-    // Verifica si el juego terminó
     if (isGameOver()) {
         alert('Game Over!');
         updateScore(score);
     }
 
-    // Verifica si el jugador ha ganado
     if (isGameWon()) {
         alert('You Win!');
         updateScore(score);
